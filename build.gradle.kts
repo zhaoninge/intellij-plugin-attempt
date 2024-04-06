@@ -18,12 +18,17 @@ version = properties("pluginVersion").get()
 
 // Configure project's dependencies
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
 // Dependencies are managed with Gradle version catalog - read more: https://docs.gradle.org/current/userguide/platforms.html#sub:version-catalog
 dependencies {
 //    implementation(libs.annotations)
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("cn.hutool:hutool-all:5.8.25")
+    implementation("org.projectlombok:lombok:1.18.24")
+    annotationProcessor("org.projectlombok:lombok:1.18.24")
 }
 
 // Set the JVM language level used to build the project.

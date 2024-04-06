@@ -1,18 +1,25 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>com.github.zhaoninge.intellijpluginattempt</id>
-    <name>intellij-plugin-attempt</name>
-    <vendor>zhaoninge</vendor>
+    <id>com.ai.boy.programming</id>
+    <name>Programming Boy</name>
+    <vendor>xuan3e</vendor>
 
     <depends>com.intellij.modules.platform</depends>
 
     <resource-bundle>messages.MyBundle</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="com.github.zhaoninge.intellijpluginattempt.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
+        <editorActionHandler action="EditorEnter" implementationClass="com.ai.boy.programming.handler.CodingHandler"/>
+        <applicationConfigurable
+                parentId="tools"
+                instance="com.ai.boy.programming.setting.AppSettingsConfigurable"
+                id="com.ai.boy.programming.setting.AppSettingsConfigurable"
+                displayName="Programming Boy"/>
     </extensions>
 
-    <applicationListeners>
-        <listener class="com.github.zhaoninge.intellijpluginattempt.listeners.MyApplicationActivationListener" topic="com.intellij.openapi.application.ApplicationActivationListener"/>
-    </applicationListeners>
+    <actions>
+        <action id="ReadLine" class="com.ai.boy.programming.action.ReadLineAction" text="ReadLine" description="ReadLine">
+            <add-to-group group-id="HelpMenu" anchor="first"/>
+        </action>
+    </actions>
 </idea-plugin>

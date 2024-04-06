@@ -1,6 +1,6 @@
-# intellij-plugin-attempt
+# programming-boy
 
-![Build](https://github.com/zhaoninge/intellij-plugin-attempt/workflows/Build/badge.svg)
+![Build](https://github.com/zhaoninge/programming-boy/workflows/Build/badge.svg)
 [![Version](https://img.shields.io/jetbrains/plugin/v/PLUGIN_ID.svg)](https://plugins.jetbrains.com/plugin/PLUGIN_ID)
 [![Downloads](https://img.shields.io/jetbrains/plugin/d/PLUGIN_ID.svg)](https://plugins.jetbrains.com/plugin/PLUGIN_ID)
 
@@ -17,23 +17,35 @@
 - [ ] Click the <kbd>Watch</kbd> button on the top of the [IntelliJ Platform Plugin Template][template] to be notified about releases containing new features and fixes.
 
 <!-- Plugin description -->
-This Fancy IntelliJ Platform Plugin is going to be your implementation of the brilliant ideas that you have.
-
-This specific section is a source for the [plugin.xml](/src/main/resources/META-INF/plugin.xml) file which will be extracted by the [Gradle](/build.gradle.kts) during the build process.
-
-To keep everything working, do not remove `<!-- ... -->` sections. 
+Programming Boy是一个基于LLM的智能编程工具。
+#### 使用之前：
+请先在Preference->Tools->Programming Boy设置API KEY，目前仅支持Moonshot API，正在加速扩展中。
+#### 使用方法：
+1. 在编辑器中合适的位置写出方法注释；
+2. 新起一行输入编程指令‘/code’，然后回车；
+Programming Boy将按照方法注释自动写出对应的方法，并插入IDE中（响应速度取决于API）。
+- 例如：
+```
+/**
+* 冒泡排序
+*/
+/code（回车）
+```
+#### 反馈问题：
+无论是在使用过程中遇到问题，还是希望增加功能、迭代优化，都可以通过以下方式与我们联系：
+（点击打开链接）https://wap28i2wo4.feishu.cn/share/base/form/shrcnHiZ2texrOpotKdaqkpaVed
 <!-- Plugin description end -->
 
 ## Installation
 
 - Using the IDE built-in plugin system:
   
-  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>Search for "intellij-plugin-attempt"</kbd> >
+  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>Search for "programming-boy"</kbd> >
   <kbd>Install</kbd>
   
 - Manually:
 
-  Download the [latest release](https://github.com/zhaoninge/intellij-plugin-attempt/releases/latest) and install it manually using
+  Download the [latest release](https://github.com/zhaoninge/programming-boy/releases/latest) and install it manually using
   <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>⚙️</kbd> > <kbd>Install plugin from disk...</kbd>
 
 
