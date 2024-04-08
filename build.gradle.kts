@@ -26,7 +26,7 @@ repositories {
 dependencies {
 //    implementation(libs.annotations)
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
-    implementation("cn.hutool:hutool-all:5.8.25")
+    implementation("cn.hutool:hutool-all:5.8.27")
     implementation("org.projectlombok:lombok:1.18.24")
     annotationProcessor("org.projectlombok:lombok:1.18.24")
 }
