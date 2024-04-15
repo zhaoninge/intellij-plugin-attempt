@@ -17,23 +17,26 @@
 - [ ] Click the <kbd>Watch</kbd> button on the top of the [IntelliJ Platform Plugin Template][template] to be notified about releases containing new features and fixes.
 
 <!-- Plugin description -->
-Programming Boy是一个基于LLM的智能编程工具。
-#### 使用之前：
-请先在Preference->Tools->Programming Boy设置API KEY，目前仅支持Moonshot API，正在加速扩展中。
-#### 使用方法：
-1. 在编辑器中合适的位置写出方法注释；
-2. 新起一行输入编程指令‘/code’，然后回车；
-Programming Boy将按照方法注释自动写出对应的方法，并插入IDE中（响应速度取决于API）。
-- 例如：
+Programming Boy is an intelligent programming tool based on LLM (Large Language Models).
+#### Before Use：
+Please first set the API KEY in Preference -> Tools -> Programming Boy. 
+
+Currently, only Moonshot API is supported, with ongoing efforts to expand compatibility.
+#### Usage Instructions：
+1. Place method comments at the appropriate location within the editor;
+2. Enter the programming command '/code' on a new line and then press Enter;
+
+Programming Boy will automatically generate the corresponding method based on the method comments and insert it into the IDE (response speed depends on the API).
+- For Example:
 ```
 /**
-* 冒泡排序
+* bubble sort
 */
-/code（回车）
+/code（Enter）
 ```
-#### 反馈问题：
-无论是在使用过程中遇到问题，还是希望增加功能、迭代优化，都可以通过以下方式与我们联系：
-（点击打开链接）https://wap28i2wo4.feishu.cn/share/base/form/shrcnHiZ2texrOpotKdaqkpaVed
+#### problem feedback：
+Whether you encounter problems in the use process, or want to increase the function, iterative optimization, you can contact us through the following ways:
+(Click to open the link)https://wap28i2wo4.feishu.cn/share/base/form/shrcnHiZ2texrOpotKdaqkpaVed
 <!-- Plugin description end -->
 
 ## Installation
