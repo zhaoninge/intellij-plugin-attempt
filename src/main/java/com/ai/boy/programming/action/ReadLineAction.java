@@ -1,7 +1,6 @@
 package com.ai.boy.programming.action;
 
 import com.ai.boy.programming.service.CodeFunctionService;
-import com.ai.boy.programming.setting.AppSettingsState;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
@@ -41,11 +40,7 @@ public class ReadLineAction extends AnAction {
                 // 将读到的文本块写入光标处
                 String linesContent = document.getText(new TextRange(preLineStartOffset, currentOffset));
 
-                /*CodeFunctionService codeFunctionService = ApplicationManager.getApplication()
-                        .getService(CodeFunctionService.class);*/
-                CodeFunctionService codeFunctionService = CodeFunctionService.getInstance();
-                String apiKey = AppSettingsState.getInstance().moonshotApiKey;
-                String function = codeFunctionService.coding(linesContent, apiKey);
+                String function = CodeFunctionService.getInstance().coding(linesContent);
 
                 WriteCommandAction.runWriteCommandAction(event.getProject(), () -> {
                     document.insertString(currentOffset, function);

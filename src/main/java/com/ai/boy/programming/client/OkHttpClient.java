@@ -1,7 +1,6 @@
-package com.ai.boy.programming.rpc;
+package com.ai.boy.programming.client;
 
 import com.intellij.openapi.diagnostic.Logger;
-import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -15,23 +14,20 @@ import static cn.hutool.json.JSONUtil.toJsonStr;
  * @date 2024/04/03
  * @desc
  */
-public class OkHttpClientUtils {
+public class OkHttpClient {
 
-    private static final Logger log = Logger.getInstance(OkHttpClientUtils.class.getName());
+    private static final Logger log = Logger.getInstance(OkHttpClient.class.getName());
 
-    private static final String DEFAULT_BASE_URL = "https://api.moonshot.cn/v1";
-    private static final String CHAT_COMPLETION_SUFFIX = "/chat/completions";
-
-    public static String postCompletion(String body, String apiKey) {
+    public static String postCompletion(String url, String apiKey, String body) {
         try {
             Request request = new Request.Builder()
-                    .url(DEFAULT_BASE_URL + CHAT_COMPLETION_SUFFIX)
+                    .url(url)
                     .addHeader("Authorization", "Bearer " + apiKey)
                     .addHeader("Content-Type", "application/json")
                     .post(RequestBody.create(body.getBytes(StandardCharsets.UTF_8)))
                     .build();
 
-            OkHttpClient client = new OkHttpClient();
+            okhttp3.OkHttpClient client = new okhttp3.OkHttpClient();
             log.info("request: " + toJsonStr(request));
             log.info("body: " + toJsonStr(body));
             Response response = client.newCall(request).execute();

@@ -34,6 +34,8 @@ Programming Boy将按照方法注释自动写出对应的方法，并插入IDE�
 #### 反馈问题：
 无论是在使用过程中遇到问题，还是希望增加功能、迭代优化，都可以通过以下方式与我们联系：
 （点击打开链接）https://wap28i2wo4.feishu.cn/share/base/form/shrcnHiZ2texrOpotKdaqkpaVed
+### 你的打赏是我持续为你提供更好插件的最大动力
+
 <!-- Plugin description end -->
 
 ## Installation

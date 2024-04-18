@@ -18,8 +18,8 @@
     </extensions>
 
     <actions>
-        <action id="ReadLine" class="com.ai.boy.programming.action.ReadLineAction" text="ReadLine" description="ReadLine">
+        <!--<action id="ReadLine" class="com.ai.boy.programming.action.ReadLineAction" text="ReadLine" description="ReadLine">
             <add-to-group group-id="HelpMenu" anchor="first"/>
-        </action>
+        </action>-->
     </actions>
 </idea-plugin>
