@@ -5,41 +5,54 @@ package com.ai.boy.programming.setting;
 import com.intellij.ui.components.JBLabel;
 import com.intellij.ui.components.JBTextField;
 import com.intellij.util.ui.FormBuilder;
-import org.jetbrains.annotations.NotNull;
+import lombok.Data;
+import org.apache.commons.lang3.StringUtils;
 
-import javax.swing.*;
+import javax.swing.JComboBox;
+import javax.swing.JPanel;
+import java.util.List;
 
 /**
  * Supports creating and managing a {@link JPanel} for the Settings Dialog.
  */
+@Data
 public class AppSettingsComponent {
 
-  private final JPanel mainPanel;
-  private final JBTextField moonshotApiKey = new JBTextField();
+    private final JPanel mainPanel;
+    private final JComboBox<String> providerCB = new JComboBox();
+    private final JComboBox<String> modelCB = new JComboBox();
+    private final JBTextField apiKeyTF = new JBTextField();
 
-  public AppSettingsComponent() {
-    mainPanel = FormBuilder.createFormBuilder()
-        .addLabeledComponent(new JBLabel("Moonshot API Key: "), moonshotApiKey, 1, false)
-        .addComponentFillVertically(new JPanel(), 0)
-        .getPanel();
-  }
+    public AppSettingsComponent() {
+        mainPanel = FormBuilder.createFormBuilder()
+                .addLabeledComponent(new JBLabel("模型提供方: "), providerCB, 1, false)
+                .addLabeledComponent(new JBLabel("模型版本: "), modelCB, 1, false)
+                .addLabeledComponent(new JBLabel("API Key: "), apiKeyTF, 1, false)
+                .addComponentFillVertically(new JPanel(), 0)
+                .getPanel();
+    }
 
-  public JPanel getPanel() {
-    return mainPanel;
-  }
+    public void initProvider(List<String> providerList, String providerSelected) {
+        providerList.forEach(providerCB::addItem);
 
-  public JComponent getPreferredFocusedComponent() {
-    return moonshotApiKey;
-  }
+        if (StringUtils.isNotBlank(providerSelected)) {
+            this.providerCB.setSelectedIndex(providerList.indexOf(providerSelected));
+        }
+    }
 
-  @NotNull
-  public String getMoonshotApiKey() {
-    return moonshotApiKey.getText();
-  }
+    public void initAndSelectModel(List<String> modelList, String model) {
+        modelCB.removeAllItems();
+        modelList.forEach(this.modelCB::addItem);
+        if (StringUtils.isNotBlank(model)) {
+            this.modelCB.setSelectedIndex(modelList.indexOf(model));
+        }
+    }
 
-  public void setMoonshotApiKey(@NotNull String newText) {
-    moonshotApiKey.setText(newText);
-  }
+    public void setApiKey(String text) {
+        apiKeyTF.setText(text);
+    }
 
-
+    public String getApiKey() {
+        return apiKeyTF.getText();
+    }
 }

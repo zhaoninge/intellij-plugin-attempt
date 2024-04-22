@@ -2,7 +2,9 @@ package com.ai.boy.programming.handler;
 
 import com.ai.boy.programming.service.CodeFunctionService;
 import com.ai.boy.programming.setting.AppSettingsState;
+import com.intellij.codeInsight.hint.HintManager;
 import com.intellij.openapi.actionSystem.DataContext;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Caret;
@@ -25,7 +27,7 @@ import static cn.hutool.json.JSONUtil.toJsonStr;
  */
 public class CodingHandler extends EditorActionHandler {
 
-    private static final Logger log = Logger.getInstance(CodingHandler.class.getName());
+    private static final Logger LOGGER = Logger.getInstance(CodingHandler.class.getName());
 
     private final EditorActionHandler originalHandler;
 
@@ -42,24 +44,25 @@ public class CodingHandler extends EditorActionHandler {
             int line = caret.getLogicalPosition().line;
 
             if (isCodingCommand(document, line)) {
-                String apiKey = AppSettingsState.getInstance().moonshotApiKey;
-                if (StringUtils.isBlank(apiKey)) {
-                    Messages.showErrorDialog("位置：\nPreferences -> Tools -> Programming Boy", "请先配置API key");
+                if (StringUtils.isBlank(AppSettingsState.getInstance().getSavedApiKey())) {
+                    Messages.showErrorDialog("位置：\nPreferences → Tools → Programming Boy", "请先配置API key");
                     return;
                 }
 
-                //replace(project, document, line, "begin thinking ……");
+                HintManager.getInstance().showInformationHint(editor, "begin thinking, wait for a moment ……");
 
                 String linesContent = readLinesForward(document, line - 1);
 
-                String codedText = CodeFunctionService.getInstance().coding(linesContent, apiKey);
+                ApplicationManager.getApplication().executeOnPooledThread(() -> {
+                    String codedText = CodeFunctionService.getInstance().coding(linesContent);
+                    replace(project, document, line, codedText);
+                });
 
-                replace(project, document, line, codedText);
             } else {
                 originalHandler.execute(editor, caret, dataContext);
             }
         } catch (Exception e) {
-            log.error("coding error, caret: " + toJsonStr(caret), e);
+            LOGGER.error("coding error, caret: " + toJsonStr(caret), e);
         }
     }
 
@@ -90,7 +93,7 @@ public class CodingHandler extends EditorActionHandler {
     }
 
     private void replace(Project project, Document document, int line, String text) {
-        int lineStartOffset = document.getLineStartOffset(line) - 1;
+        int lineStartOffset = document.getLineStartOffset(line);
         int lineEndOffset = document.getLineEndOffset(line);
         WriteCommandAction.runWriteCommandAction(project, () -> {
             document.replaceString(lineStartOffset, lineEndOffset, text);

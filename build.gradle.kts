@@ -6,11 +6,11 @@ fun environment(key: String) = providers.environmentVariable(key)
 
 plugins {
     id("java") // Java support
-    alias(libs.plugins.kotlin) // Kotlin support
+    //alias(libs.plugins.kotlin) // Kotlin support
     alias(libs.plugins.gradleIntelliJPlugin) // Gradle IntelliJ Plugin
     alias(libs.plugins.changelog) // Gradle Changelog Plugin
     alias(libs.plugins.qodana) // Gradle Qodana Plugin
-    alias(libs.plugins.kover) // Gradle Kover Plugin
+    //alias(libs.plugins.kover) // Gradle Kover Plugin
 }
 
 group = properties("pluginGroup").get()
@@ -20,21 +20,35 @@ version = properties("pluginVersion").get()
 repositories {
     mavenLocal()
     mavenCentral()
+    maven("https://repo.spring.io/milestone")
 }
 
 // Dependencies are managed with Gradle version catalog - read more: https://docs.gradle.org/current/userguide/platforms.html#sub:version-catalog
 dependencies {
-//    implementation(libs.annotations)
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
-    implementation("cn.hutool:hutool-all:5.8.25")
+    //implementation("cn.hutool:hutool-all:5.8.25")
     implementation("org.projectlombok:lombok:1.18.24")
     annotationProcessor("org.projectlombok:lombok:1.18.24")
+
+    implementation(platform("org.springframework.ai:spring-ai-bom:0.8.1"))
+    implementation("org.springframework.ai:spring-ai-openai") {
+        exclude(group = "com.fasterxml")
+        exclude(group = "com.fasterxml.jackson")
+        exclude(group = "com.fasterxml.jackson.core")
+        //exclude(group = "com.fasterxml.jackson.datatype")
+    }
+
+    implementation("cn.bigmodel.openapi:oapi-java-sdk:release-V4-2.0.2") {
+        exclude(group = "com.fasterxml")
+        exclude(group = "com.fasterxml.jackson")
+        exclude(group = "com.fasterxml.jackson.core")
+    }
 }
 
 // Set the JVM language level used to build the project.
-kotlin {
+/*kotlin {
     jvmToolchain(17)
-}
+}*/
 
 // Configure Gradle IntelliJ Plugin - read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
 intellij {
@@ -53,13 +67,13 @@ changelog {
 }
 
 // Configure Gradle Kover Plugin - read more: https://github.com/Kotlin/kotlinx-kover#configuration
-koverReport {
+/*koverReport {
     defaults {
         xml {
             onCheck = true
         }
     }
-}
+}*/
 
 tasks {
     wrapper {

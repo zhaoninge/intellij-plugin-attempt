@@ -1,15 +1,14 @@
 package com.ai.boy.programming.service;
 
-import com.ai.boy.programming.rpc.OkHttpClientUtils;
-import com.ai.boy.programming.rpc.builder.ChatCompletionRequestBuilder;
-import com.ai.boy.programming.rpc.dto.ChatCompletionRequest;
-import com.ai.boy.programming.rpc.dto.ChatCompletionResponse;
+import com.ai.boy.programming.factory.LlmClientFactory;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.Service;
-import org.apache.commons.lang3.StringUtils;
+import com.intellij.openapi.diagnostic.Logger;
+import com.intellij.util.SlowOperations;
 
-import static cn.hutool.json.JSONUtil.toBean;
-import static cn.hutool.json.JSONUtil.toJsonStr;
+import static com.ai.boy.programming.factory.ChatCompletionRequestFactory.buildChatCompletionRequest;
+import static com.ai.boy.programming.util.StringUtils.removeCodeBlockMarker;
+import static com.ai.boy.programming.util.StringUtils.removeLeadingAndTrailingLineBreaks;
 
 /**
  * @author zhaoning
@@ -19,26 +18,17 @@ import static cn.hutool.json.JSONUtil.toJsonStr;
 @Service
 public final class CodeFunctionService {
 
+    private static final Logger LOGGER = Logger.getInstance(CodeFunctionService.class);
+
     public static CodeFunctionService getInstance() {
         return ApplicationManager.getApplication().getService(CodeFunctionService.class);
     }
 
-    public String coding(String text, String apiKey) {
-        ChatCompletionRequest request = ChatCompletionRequestBuilder.buildChatCompletionRequest(text);
+    public String coding(String text) {
+        Object request = buildChatCompletionRequest(text);
 
-        String response = OkHttpClientUtils.postCompletion(toJsonStr(request), apiKey);
+        String content = LlmClientFactory.getClient().chatCompletion(request);
 
-        ChatCompletionResponse completionResponse = toBean(response, ChatCompletionResponse.class);
-        String content = completionResponse.getChoices().get(0).getMessage().getContent();
-
-        return removeMarkDown(content);
-    }
-
-    private String removeMarkDown(String text) {
-        if (StringUtils.isBlank(text)) {
-            return text;
-        }
-        return text.replace("```java", "")
-                .replace("```", "");
+        return removeLeadingAndTrailingLineBreaks(removeCodeBlockMarker(content));
     }
 }
