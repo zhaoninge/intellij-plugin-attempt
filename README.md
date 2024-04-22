@@ -19,7 +19,7 @@
 <!-- Plugin description -->
 Programming Boy is an intelligent programming tool based on LLM (Large Language Models).
 #### Before Use：
-Please first set the API KEY in Preference -> Tools -> Programming Boy. 
+Please first set the API KEY in Preference → Tools → Programming Boy. 
 
 Currently, only Moonshot API is supported, with ongoing efforts to expand compatibility.
 #### Usage Instructions：
@@ -34,9 +34,16 @@ Programming Boy will automatically generate the corresponding method based on th
 */
 /code（Enter）
 ```
-#### problem feedback：
+#### Problem feedback：
 Whether you encounter problems in the use process, or want to increase the function, iterative optimization, you can contact us through the following ways:
 (Click to open the link)https://wap28i2wo4.feishu.cn/share/base/form/shrcnHiZ2texrOpotKdaqkpaVed
+
+#### Give it a reward：
+Your rewards are my biggest motivation to continue to provide you with better features 
+(觉得不错，可以赞赏。您的赞赏是我持续为你提供更好功能的最大动力)
+
+![您的赞赏是我持续为你提供更好功能的最大动力](https://img-blog.csdnimg.cn/direct/fb402cc9accb48eda3a6a830b643106a.png)
+(or click to open the link)https://img-blog.csdnimg.cn/direct/fb402cc9accb48eda3a6a830b643106a.png
 <!-- Plugin description end -->
 
 ## Installation

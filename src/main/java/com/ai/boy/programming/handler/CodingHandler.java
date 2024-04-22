@@ -45,7 +45,7 @@ public class CodingHandler extends EditorActionHandler {
 
             if (isCodingCommand(document, line)) {
                 if (StringUtils.isBlank(AppSettingsState.getInstance().getSavedApiKey())) {
-                    Messages.showErrorDialog("位置：\nPreferences -> Tools -> Programming Boy", "请先配置API key");
+                    Messages.showErrorDialog("位置：\nPreferences → Tools → Programming Boy", "请先配置API key");
                     return;
                 }
 
