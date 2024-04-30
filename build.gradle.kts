@@ -47,7 +47,7 @@ dependencies {
     }
 
     // zhipu
-    implementation("cn.bigmodel.openapi:oapi-java-sdk:release-V4-2.0.2") {
+    implementation("cn.bigmodel.openapi:oapi-java-sdk:1.0.6") {
         exclude(group = "com.fasterxml")
         exclude(group = "com.fasterxml.jackson")
         exclude(group = "com.fasterxml.jackson.core")
