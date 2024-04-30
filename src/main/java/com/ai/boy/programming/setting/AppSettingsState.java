@@ -33,11 +33,14 @@ public final class AppSettingsState implements PersistentStateComponent<AppSetti
 
     private String provider;
     private Map<String, String> modelMap;
+    private Map<String, String> accessKeyIdMap;
+    private Map<String, String> accessKeyMap;
 
     public static AppSettingsState getInstance() {
         return ApplicationManager.getApplication().getService(AppSettingsState.class);
     }
 
+    // region set get model
     public void setModel(String provider, String model) {
         if (null == this.modelMap) {
             this.modelMap = new HashMap<>();
@@ -52,7 +55,9 @@ public final class AppSettingsState implements PersistentStateComponent<AppSetti
     public String getSavedModel() {
         return getModel(this.provider);
     }
+    // endregion
 
+    // region set get api key
     public void setApiKey(String provider, String apiKey) {
         saveCredential(provider, apiKey);
     }
@@ -64,6 +69,41 @@ public final class AppSettingsState implements PersistentStateComponent<AppSetti
     public String getSavedApiKey() {
         return getApiKey(this.provider);
     }
+    // endregion
+
+    // region set get access key id
+    public void setAccessKeyId(String provider, String accessKeyId) {
+        if (null == this.accessKeyIdMap) {
+            this.accessKeyIdMap = new HashMap<>();
+        }
+        accessKeyIdMap.put(provider, accessKeyId);
+    }
+
+    public String getAccessKeyId(String provider) {
+        return null != accessKeyIdMap ? accessKeyIdMap.get(provider) : null;
+    }
+
+    public String getSavedAccessKeyId() {
+        return getAccessKeyId(this.provider);
+    }
+    // endregion
+
+    // region set get access key
+    public void setAccessKey(String provider, String accessKeyId) {
+        if (null == this.accessKeyMap) {
+            this.accessKeyMap = new HashMap<>();
+        }
+        accessKeyMap.put(provider, accessKeyId);
+    }
+
+    public String getAccessKey(String provider) {
+        return null != accessKeyMap ? accessKeyMap.get(provider) : null;
+    }
+
+    public String getSavedAccessKey() {
+        return getAccessKey(this.provider);
+    }
+    // endregion
 
     @Override
     public @NotNull AppSettingsState getState() {

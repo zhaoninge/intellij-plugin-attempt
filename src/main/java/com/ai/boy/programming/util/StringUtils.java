@@ -45,4 +45,18 @@ public class StringUtils {
 
         return text.substring(beginIndex, endIndex + 1);
     }
+
+    /**
+     * 移除结束符，Llama3专用
+     *
+     * @param text
+     * @return
+     */
+    public static String removeEotId(String text) {
+        if (text == null) {
+            return null;
+        }
+        int i = text.indexOf("<|eot_id|>");
+        return i < 0 ? text : text.substring(0, i);
+    }
 }

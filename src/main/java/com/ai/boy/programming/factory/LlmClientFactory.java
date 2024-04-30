@@ -1,6 +1,7 @@
 package com.ai.boy.programming.factory;
 
 import com.ai.boy.programming.client.LlmClient;
+import com.ai.boy.programming.client.impl.BedrockLlamaClient;
 import com.ai.boy.programming.client.impl.MiniMaxClient;
 import com.ai.boy.programming.client.impl.MoonshotClient;
 import com.ai.boy.programming.client.impl.ZhiPuClient;
@@ -25,6 +26,7 @@ public class LlmClientFactory {
             case MOONSHOT -> getApplication().getService(MoonshotClient.class);
             case ZHI_PU -> getApplication().getService(ZhiPuClient.class);
             case MINI_MAX -> getApplication().getService(MiniMaxClient.class);
+            case AMAZON -> getApplication().getService(BedrockLlamaClient.class);
         };
     }
 
