@@ -26,8 +26,8 @@ repositories {
 // Dependencies are managed with Gradle version catalog - read more: https://docs.gradle.org/current/userguide/platforms.html#sub:version-catalog
 dependencies {
     //implementation("com.squareup.okhttp3:okhttp:4.12.0")
-    implementation("org.projectlombok:lombok:1.18.24")
-    annotationProcessor("org.projectlombok:lombok:1.18.24")
+    implementation("org.projectlombok:lombok:1.18.32")
+    annotationProcessor("org.projectlombok:lombok:1.18.32")
 
     implementation(platform("org.springframework.ai:spring-ai-bom:0.8.1"))
     implementation("org.springframework.ai:spring-ai-openai") {
