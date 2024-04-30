@@ -31,6 +31,11 @@ public class ModelFactory {
             "abab5.5s-chat"
     );
 
+    private static final List<String> AMAZON_LLAMA = Arrays.asList(
+            "meta.llama3-8b-instruct-v1:0",
+            "meta.llama3-70b-instruct-v1:0"
+    );
+
     public static List<String> getProviderList() {
         return Arrays.stream(ProviderEnum.values())
                 .map(ProviderEnum::getCode)
@@ -44,6 +49,7 @@ public class ModelFactory {
             case MOONSHOT -> MOONSHOT_MODEL_LIST;
             case ZHI_PU -> ZHI_PU_MODEL_LIST;
             case MINI_MAX -> MINI_MAX_MODEL_LIST;
+            case AMAZON -> AMAZON_LLAMA;
         };
     }
 

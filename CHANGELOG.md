@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+#### v0.0.3
+- Integrate with Amazon Model：meta.llama3-8b-instruct-v1:0、meta.llama3-70b-instruct-v1:0
+- Automatically format the generated code
+
 #### v0.0.2
 
 - Added generate code prompts: "begin thinking, wait for a moment ……"

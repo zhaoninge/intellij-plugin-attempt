@@ -8,6 +8,7 @@ import com.intellij.util.SlowOperations;
 
 import static com.ai.boy.programming.factory.ChatCompletionRequestFactory.buildChatCompletionRequest;
 import static com.ai.boy.programming.util.StringUtils.removeCodeBlockMarker;
+import static com.ai.boy.programming.util.StringUtils.removeEotId;
 import static com.ai.boy.programming.util.StringUtils.removeLeadingAndTrailingLineBreaks;
 
 /**
@@ -29,6 +30,8 @@ public final class CodeFunctionService {
 
         String content = LlmClientFactory.getClient().chatCompletion(request);
 
-        return removeLeadingAndTrailingLineBreaks(removeCodeBlockMarker(content));
+        return removeEotId(
+                removeLeadingAndTrailingLineBreaks(
+                        removeCodeBlockMarker(content)));
     }
 }

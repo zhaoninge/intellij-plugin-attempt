@@ -20,7 +20,7 @@ public final class MoonshotClient implements LlmClient {
 
     private static OpenAiChatClient chatClient;
 
-    public static OpenAiChatClient getClient() {
+    private static OpenAiChatClient getClient() {
         if (null == chatClient) {
             String apiKey = AppSettingsState.getInstance().getSavedApiKey();
             chatClient = new OpenAiChatClient(new OpenAiApi(CHAT_URL, apiKey));

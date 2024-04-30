@@ -2,6 +2,7 @@ package com.ai.boy.programming.handler;
 
 import com.ai.boy.programming.service.CodeFunctionService;
 import com.ai.boy.programming.setting.AppSettingsState;
+import com.intellij.codeInsight.actions.ReformatCodeProcessor;
 import com.intellij.codeInsight.hint.HintManager;
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.application.ApplicationManager;
@@ -14,6 +15,8 @@ import com.intellij.openapi.editor.actionSystem.EditorActionHandler;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.util.TextRange;
+import com.intellij.psi.PsiDocumentManager;
+import com.intellij.psi.PsiFile;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -40,6 +43,7 @@ public class CodingHandler extends EditorActionHandler {
         try {
             Project project = editor.getProject();
             Document document = editor.getDocument();
+            PsiFile psiFile = PsiDocumentManager.getInstance(project).getPsiFile(document);
             caret = null == caret ? editor.getCaretModel().getPrimaryCaret() : caret;
             int line = caret.getLogicalPosition().line;
 
@@ -55,7 +59,7 @@ public class CodingHandler extends EditorActionHandler {
 
                 ApplicationManager.getApplication().executeOnPooledThread(() -> {
                     String codedText = CodeFunctionService.getInstance().coding(linesContent);
-                    replace(project, document, line, codedText);
+                    replace(project, document, psiFile, line, codedText);
                 });
 
             } else {
@@ -92,11 +96,20 @@ public class CodingHandler extends EditorActionHandler {
         }
     }
 
-    private void replace(Project project, Document document, int line, String text) {
+    private void replace(Project project, Document document, PsiFile psiFile, int line, String text) {
         int lineStartOffset = document.getLineStartOffset(line);
         int lineEndOffset = document.getLineEndOffset(line);
         WriteCommandAction.runWriteCommandAction(project, () -> {
             document.replaceString(lineStartOffset, lineEndOffset, text);
+            // 格式化新增代码
+            format(psiFile, lineStartOffset, lineEndOffset + text.length());
         });
+    }
+
+    private void format(PsiFile psiFile, int startOffset, int endOffset) {
+        TextRange textRange = new TextRange(startOffset, endOffset);
+        ReformatCodeProcessor reformatCodeProcessor = new ReformatCodeProcessor(psiFile,
+                new TextRange[]{textRange});
+        reformatCodeProcessor.run();
     }
 }

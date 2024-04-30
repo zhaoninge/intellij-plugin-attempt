@@ -36,28 +36,40 @@ public class ChatCompletionRequestFactory {
         assert providerEnum != null;
 
         return switch (providerEnum) {
-            case MOONSHOT -> buildMoonshotRequest(text, model);
+            case MOONSHOT -> buildPrompt(text, model);
             case ZHI_PU -> buildZhiPuRequest(text, model);
             case MINI_MAX -> buildMiniMaxRequest(text, model);
+            case AMAZON -> buildPrompt(text);
         };
     }
 
-    private static Prompt buildMoonshotRequest(String text, String model) {
+    private static final String SYSTEM_MESSAGE = "你是一名java开发工程师，思维缜密，编码规范，只会输出代码，不会包含代码解释";
+    private static final String USER_MESSAGE = """
+            深呼吸，一步一步完成下述任务：
+            写一个方法代码实现，不包含类代码，不带任何Markdown标记，方法的注释描述如下：
+            """;
+
+    private static Prompt buildPrompt(String text, String model) {
         List<Message> messages = new ArrayList<>();
-        messages.add(new SystemMessage("你是一名java开发工程师"));
-        messages.add(
-                new UserMessage("写出这段文字描述的java方法，只写代码，不要带任何Markdown标记，不用解释：\n" + text));
+        messages.add(new SystemMessage(SYSTEM_MESSAGE));
+        messages.add(new UserMessage(USER_MESSAGE + text));
         OpenAiChatOptions options = OpenAiChatOptions.builder()
                 .withModel(model)
                 .build();
         return new Prompt(messages, options);
     }
 
+    private static Prompt buildPrompt(String text) {
+        List<Message> messages = new ArrayList<>();
+        messages.add(new SystemMessage(SYSTEM_MESSAGE));
+        messages.add(new UserMessage(USER_MESSAGE + text));
+        return new Prompt(messages);
+    }
+
     private static ChatCompletionRequest buildZhiPuRequest(String text, String model) {
         List<ChatMessage> messages = new ArrayList<>();
-        messages.add(new ChatMessage(ChatMessageRole.SYSTEM.value(), "你是一名java开发工程师"));
-        messages.add(new ChatMessage(ChatMessageRole.USER.value(),
-                "写出这段文字描述的java方法，只写代码，不要带任何Markdown标记，不用解释：\n" + text));
+        messages.add(new ChatMessage(ChatMessageRole.SYSTEM.value(), SYSTEM_MESSAGE));
+        messages.add(new ChatMessage(ChatMessageRole.USER.value(), USER_MESSAGE + text));
 
         String requestId = format("pb-%d", System.currentTimeMillis());
 
@@ -65,8 +77,9 @@ public class ChatCompletionRequestFactory {
                 .model(model)
                 .invokeMethod(Constants.invokeMethod)
                 .stream(Boolean.FALSE)
-                .messages(messages)
+                .temperature(0.1f)
                 .requestId(requestId)
+                .messages(messages)
                 .build();
     }
 
@@ -79,9 +92,8 @@ public class ChatCompletionRequestFactory {
      */
     private static ChatCompletionRequest buildMiniMaxRequest(String text, String model) {
         List<ChatMessage> messages = new ArrayList<>();
-        messages.add(new ChatMessage(ChatMessageRole.SYSTEM.value(), "你是一名java开发工程师"));
-        messages.add(new ChatMessage(ChatMessageRole.USER.value(),
-                "写出这段文字描述的java方法，只写代码，不要带任何Markdown标记，不用解释：\n" + text));
+        messages.add(new ChatMessage(ChatMessageRole.SYSTEM.value(), SYSTEM_MESSAGE));
+        messages.add(new ChatMessage(ChatMessageRole.USER.value(), USER_MESSAGE + text));
 
         return ChatCompletionRequest.builder()
                 .model(model)

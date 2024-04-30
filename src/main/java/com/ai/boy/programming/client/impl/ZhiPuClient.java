@@ -17,7 +17,7 @@ public final class ZhiPuClient implements LlmClient {
 
     private static ClientV4 clientV4;
 
-    public static ClientV4 getClient() {
+    private static ClientV4 getClient() {
         if (null == clientV4) {
             String apiKey = AppSettingsState.getInstance().getSavedApiKey();
             clientV4 = new ClientV4.Builder(apiKey)

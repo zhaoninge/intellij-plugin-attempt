@@ -10,6 +10,7 @@ public enum ProviderEnum {
     MOONSHOT("Moonshot"),
     ZHI_PU("智谱清言"),
     MINI_MAX("MiniMax"),
+    AMAZON("Amazon"),
     ;
 
     private final String code;
